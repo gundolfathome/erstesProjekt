@@ -1,19 +1,19 @@
-# Getting Started With Spring Boot With Kubernetes #
+# Getting Started With Spring Boot With Kubernetes
 
-## Aufbau eines **KIND-Kubernetes-Cluster** mit drei Knoten ##
+## Aufbau eines **KIND-Kubernetes-Cluster** mit drei Knoten
 - Installing  with a Package Manager.
 - On Windows via Chocolatey (https://chocolatey.org/packages/kind)
 
-### eine Konsole öffnen und in das Projektverzeichnis wechseln ###
+### eine Konsole öffnen und in das Projektverzeichnis wechseln
 - choco install kind -> das Installationsverzeichnis wird auf der Console angezeigt
 - dort im Ordner *kubernetes* : **kind create cluster --create-kind-cluster.yaml**
 - kubectl get nodes  ==>
 - es werden **drei** nodes angezeigt: kind-control-plane, kind-worker, kind-worker2
 
-### Installation INGRESS: ###
+### Installation INGRESS:
 - kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 
-### TEST: ###
+### TEST:
 - im Ordner *kubernetes* : **kubectl apply -f test-deployment.yaml**
 - The output shows three new objects have been created: pod/test-app, service/test-service und ingress.networking.k8s.io/test-ingress
 - im Ordner *kubernetes* : **kubectl port-forward service/test-service 5678:5678**
@@ -26,14 +26,14 @@
 - im Ordner *kubernetes* : **kubectl delete -f test-deployment.yaml**
 
 
-### Notwendige yaml-Dateien zur Ausführung des Spring Boot Microservices:###
+### Notwendige yaml-Dateien zur Ausführung des Spring Boot Microservices:
 - im Ordner *kubernetes* : **kubectl apply -f pod-product.yaml**
 - im Ordner *kubernetes* : **kubectl apply -f service-product.yaml**
 - im Ordner *kubernetes* : **kubectl apply -f ingress-product.yaml**
 - im Ordner *kubernetes* : **kubectl apply -f deployment-product.yaml**
 
 
-### TEST der Spring Boot Applikation mit Postman###
+### TEST der Spring Boot Applikation mit Postman
 - Vor der Docker-Containerisierung dieses Projekts werden die Endpoints der Spring Boot Applikation mit **Postman** getestet.
 - Für POST kann z.B. folgender Body eingegeben werden: {
     "name": "Apple iPhone 333",
@@ -46,15 +46,15 @@
 - mit dem Request **GET http://localhost:81/products/99c4c747-c9c2-4c04-8a43-43c3b82102a8** wird das entsprechende Produkt
   in Postman ausgegeben.
 
-### Docker Commands ###
+### Docker Commands
 - in **Eclipse** Maven clean und Maven install ausführen
 - Auf der Kommandozeile im **Verzeichnis des Dockerfiles** dieses Projekts folgenden Befehl ausführen: **docker build -t product-svc-temp .**
-- ==> dann einen neuen Tag vergeben: **docker tag product-svc-temp:latest doesbattel/product-svc:1.0.1**
-- ==> **docker container run -p 8080:8080 -itd --name product-svc-app doesbattel/product-svc:1.0.1**
+- ==> dann einen neuen Tag vergeben: **docker tag product-svc-temp:latest doesbattel/product-svc:1.0.0**
+- ==> **docker container run -p 8080:8080 -itd --name product-svc-app doesbattel/product-svc:1.0.0**
 - **Vor** dem Pushen, die Endpoints wie oben beschrieben mit Postman testen.
-- ==> ** docker push doesbattel/product-svc:1.0.1**
+- ==> **docker push doesbattel/product-svc:1.0.0**
 
-### VERSIONSÄNDERUNG ###
+### Bei Versionsändewerung
 - Bei jeder neuen Änderung der SpringBoot-Applikation, diese beim Taggen entsprechend erhöhen:
 - docker tag product-svc-temp:latest <<AUS ALT doesbattel/product-svc:**1.0.0** wird z.B. NEU doesbattel/product-svc:**1.0.1**>>
 - docker container run -p 8080:8080 -itd --name product-svc-app doesbattel/product-svc:**1.0.1**
