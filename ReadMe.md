@@ -40,24 +40,24 @@
     "description": "Foldable iphone",
     "price": "2500"
 }
-- ==> mit dem Request **POST http://localhost:8080/products/** wird dann das Produkt gespeichert.
-- ==> mit dem Request **GET http://localhost:8080/products/** werden alle Produkte in Postman ausgegeben. Daraus lassen sich 
+- ==> mit dem Request **POST http://localhost:9090/products/** wird dann das Produkt gespeichert.
+- ==> mit dem Request **GET http://localhost:9090/products/** werden alle Produkte in Postman ausgegeben. Daraus lassen sich 
   dann auch die **ID-Nummer(n)** ermitteln, die im nächsten GET Request verwendet werden können.
-- mit dem Request **GET http://localhost:880/products/ID-Nummer** wird das entsprechende Produkt
+- mit dem Request **GET http://localhost:9090/products/ID-Nummer** wird das entsprechende Produkt
   in Postman ausgegeben.
 
 ### Docker Commands
 - in **Eclipse** Maven clean und Maven install ausführen
 - Auf der Kommandozeile im **Verzeichnis des Dockerfiles** dieses Projekts folgenden Befehl ausführen: **docker build -t product-svc-temp .**
 - ==> dann einen neuen Tag vergeben: **docker tag product-svc-temp:latest doesbattel/product-svc:1.0.0**
-- ==> **docker container run -p 8080:8080 -itd --name product-svc-app doesbattel/product-svc:1.0.0**
+- ==> **docker container run -p 9090:9090 -itd --name product-svc-app doesbattel/product-svc:1.0.0**
 - **Vor** dem Pushen, die Endpoints wie oben beschrieben mit Postman testen.
 - ==> **docker push doesbattel/product-svc:1.0.0**
 
 ### Bei Versionsänderung
 - Bei jeder neuen Änderung der SpringBoot-Applikation, diese beim Taggen entsprechend erhöhen:
 - docker tag product-svc-temp:latest <<AUS ALT doesbattel/product-svc:**1.0.0** wird z.B. NEU doesbattel/product-svc:**1.0.1**>>
-- docker container run -p 8080:8080 -itd --name product-svc-app doesbattel/product-svc:**1.0.1**
+- docker container run -p 9090:9090 -itd --name product-svc-app doesbattel/product-svc:**1.0.1**
 - Vor dem Pushen, die Endpoints mit Postman testen.
 - ==> **docker push doesbattel/product-svc:1.0.1**
 
