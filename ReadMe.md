@@ -19,7 +19,7 @@
 - im Ordner *kubernetes* : **kubectl port-forward service/test-service 5678:5678**
 - the following output appears:
 - **Forwarding from 127.0.0.1:5678 -> 5678**
-- **Forwarding from [::1]:5678 -> 5678**
+- **Forwarding from 127.0.0.1:5678 -> 5678**
 - Open **another** terminal window and test the deployment by typing: curl localhost:5678
 - or open a **browser** and type in the address bar the URL: localhost:5678
 - on the other console and in the browser should appear the following message: **The test has been successful!**
@@ -40,10 +40,10 @@
     "description": "Foldable iphone",
     "price": "2500"
 }
-- ==> mit dem Request **POST http://localhost:81/products/** wird dann das Produkt gespeichert.
-- ==> mit dem Request **GET http://localhost:81/products/** werden alle Produkte in Postman ausgegeben. Daraus lassen sich 
-  dann auch die ID's ermitteln, die im nächsten GET Request verwendet werden können.
-- mit dem Request **GET http://localhost:81/products/99c4c747-c9c2-4c04-8a43-43c3b82102a8** wird das entsprechende Produkt
+- ==> mit dem Request **POST http://localhost:8080/products/** wird dann das Produkt gespeichert.
+- ==> mit dem Request **GET http://localhost:8080/products/** werden alle Produkte in Postman ausgegeben. Daraus lassen sich 
+  dann auch die **ID-Nummer(n)** ermitteln, die im nächsten GET Request verwendet werden können.
+- mit dem Request **GET http://localhost:880/products/ID-Nummer** wird das entsprechende Produkt
   in Postman ausgegeben.
 
 ### Docker Commands
@@ -54,7 +54,7 @@
 - **Vor** dem Pushen, die Endpoints wie oben beschrieben mit Postman testen.
 - ==> **docker push doesbattel/product-svc:1.0.0**
 
-### Bei Versionsändewerung
+### Bei Versionsänderung
 - Bei jeder neuen Änderung der SpringBoot-Applikation, diese beim Taggen entsprechend erhöhen:
 - docker tag product-svc-temp:latest <<AUS ALT doesbattel/product-svc:**1.0.0** wird z.B. NEU doesbattel/product-svc:**1.0.1**>>
 - docker container run -p 8080:8080 -itd --name product-svc-app doesbattel/product-svc:**1.0.1**

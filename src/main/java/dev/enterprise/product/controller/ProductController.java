@@ -1,28 +1,32 @@
-package dev.techdozo.product.controller;
-
-import dev.techdozo.product.application.Product;
-import dev.techdozo.product.application.error.RecordNotFoundException;
-import dev.techdozo.product.application.repository.ProductRepository;
-import lombok.extern.slf4j.Slf4j;
+package dev.enterprise.product.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import dev.enterprise.product.application.entity.Product;
+import dev.enterprise.product.application.error.RecordNotFoundException;
+import dev.enterprise.product.application.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
 @RestController
 public class ProductController {
 
-	@Autowired private ProductRepository productRepository;
+	@Autowired private ProductService productService;
 
 	@GetMapping("/products/{productId}")
-	public ResponseEntity<Product> getProduct(@PathVariable String productId) {
+	public ResponseEntity<Product> getProduct(@PathVariable Long productId) {
 		log.info("Fetching product {}", productId);
-		var productOptional = productRepository.getProduct(productId);
+		var productOptional = productService.getProduct(productId);
 		Product product = productOptional.orElseThrow(RecordNotFoundException::new);
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
@@ -30,14 +34,15 @@ public class ProductController {
 	@GetMapping("/products/")
 	public ResponseEntity<?> getProducts(){
 		log.info("Retrieving all products");
-		List<Product> entries =  productRepository.getAllProducts();
+		List<Product> entries =  productService.getAllProducts();
 		return ResponseEntity.ok(entries);
 	}
 
 	@PostMapping("/products/")
 	public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
 	log.info("Saving product");
-	var savedProduct = productRepository.save(product);
+	var savedProduct = productService.save(product);
 	return new ResponseEntity<>(savedProduct, HttpStatus.OK);
 	}
+
 }
