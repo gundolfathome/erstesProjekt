@@ -9,4 +9,4 @@ spec:
   containers:
     - name: product
       imagePullPolicy: Always
-      image: doesbattel/product-svc:1.0.1
+      image: doesbattel/product-svc:2.0.0

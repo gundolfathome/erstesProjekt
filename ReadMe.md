@@ -62,7 +62,7 @@
 - ==> **docker push doesbattel/product-svc:1.0.1**
 
 ### die Anwendung im Kubernetes-Cluster ausführen
-- **Wichtig** : in der Datei "deployment-product.yaml" die Versionsnummer des images anpassen
+- **Wichtig** : in der Datei "deployment-product.yaml" und "pod-product.yaml" die Versionsnummer des images anpassen
 - im Ordner *kubernetes* : **kubectl apply -f deployment-product.yaml**
 - den Docker Container mit dem Namen "product-svc-app" löschen
 - jetzt können die Endpoints des Microservices im Kubernetes-Cluster wieder wie oben beschrieben mit Postman getestet werden.
